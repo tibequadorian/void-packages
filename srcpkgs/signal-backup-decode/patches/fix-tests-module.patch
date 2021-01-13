@@ -1,0 +1,38 @@
+From af61e6925af454013de616df87674aca78d684fa Mon Sep 17 00:00:00 2001
+From: Cedric Staniewski <cedric@gmx.ca>
+Date: Sat, 24 Oct 2020 23:17:19 +0200
+Subject: [PATCH] Fix tests module
+
+Compiling the tests module fails because of a missing import:
+
+error[E0433]: failed to resolve: use of undeclared type or module `aes_ctr`
+   --> src/decrypter.rs:128:6
+    |
+128 |     use aes_ctr::stream_cipher::NewStreamCipher;
+    |         ^^^^^^^ use of undeclared type or module `aes_ctr`
+
+It turned out, however, that NewStreamCipher is never used. Therefore,
+it is sufficient to remove the problematic import line.
+
+warning: unused import: `aes_ctr::stream_cipher::NewStreamCipher`
+   --> src/decrypter.rs:128:6
+    |
+128 |     use aes_ctr::stream_cipher::NewStreamCipher;
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |
+---
+ src/decrypter.rs | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/decrypter.rs b/src/decrypter.rs
+index b660aac..0247fd0 100644
+--- src/decrypter.rs
++++ src/decrypter.rs
+@@ -125,7 +125,6 @@ impl std::fmt::Display for DecryptError {
+ #[cfg(test)]
+ mod tests {
+ 	use super::*;
+-	use aes_ctr::stream_cipher::NewStreamCipher;
+ 
+ 	#[test]
+ 	fn increase_iv() {

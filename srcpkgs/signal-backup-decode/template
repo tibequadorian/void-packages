@@ -1,6 +1,6 @@
 # Template file for 'signal-backup-decode'
 pkgname=signal-backup-decode
-version=0.2.0
+version=0.2.1
 revision=1
 build_style=cargo
 hostmakedepends="pkg-config"
@@ -9,5 +9,5 @@ short_desc="Decode Signal Android Backups"
 maintainer="Spencer Burris <sburris@posteo.net>"
 license="GPL-3.0-or-later"
 homepage="https://github.com/pajowu/signal-backup-decode"
-distfiles="${homepage}/archive/${version}.tar.gz"
-checksum=9a454bb894963e7f6301bdcd3db2c7978fb0cfb7e6fce3f4f553ccad7f955fe9
+distfiles="${homepage}/archive/v${version}.tar.gz"
+checksum=99d499a0b12ae73004ef1a217a231700061898c577f392b5ea733d4902ddb178
