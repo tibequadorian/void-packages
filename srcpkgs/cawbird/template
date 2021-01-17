@@ -1,0 +1,14 @@
+# Template file for 'cawbird'
+pkgname=cawbird
+version=1.3.2
+revision=1
+build_style=meson
+hostmakedepends="vala pkg-config"
+makedepends="liboauth-devel glib-devel gtk+3-devel rest-devel json-glib-devel
+  gst-plugins-base1-devel gspell-devel"
+short_desc="Fork of the Corebird GTK Twitter client"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-3.0-or-later"
+homepage="https://ibboard.co.uk/cawbird"
+distfiles="https://github.com/IBBoard/cawbird/archive/v${version}.tar.gz"
+checksum=20dd01b1b93f2608bbf6a83d5e4589927f875eff111a11366283b121c6136de7
