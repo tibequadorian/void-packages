@@ -15,6 +15,14 @@ distfiles="https://github.com/libfuse/libfuse/releases/download/fuse-${version}/
 checksum=736e8d1ce65c09cb435fbbb500d53dc75f4d6e93bd325d22adc890951cf56337
 conf_files="/etc/fuse.conf"
 
+if [ "$XBPS_CHECK_PKGS" ]; then
+	hostmakedepends+=" python3-pytest which"
+fi
+
+do_check() {
+	PATH="$wrksrc/build/util:$PATH" python3 -m pytest test/
+}
+
 post_install() {
 	chmod u+s ${DESTDIR}/usr/bin/fusermount3
 	rm ${DESTDIR}/etc/init.d/fuse3
