@@ -3,7 +3,7 @@
 # downloading in the build process.
 # https://ftp.osuosl.org/pub/musescore/soundfont/MuseScore_General/
 pkgname=musescore
-version=3.5.2
+version=3.6.2
 revision=1
 wrksrc="MuseScore-${version}"
 build_style=gnu-makefile
@@ -17,11 +17,11 @@ makedepends="jack-devel lame-devel libsndfile-devel portaudio-devel
  qt5-plugin-pgsql qt5-plugin-sqlite qt5-plugin-tds qt5-quickcontrols2-devel"
 depends="qt5-plugin-sqlite qt5-graphicaleffects qt5-quickcontrols2"
 short_desc="Create, play and print beautiful sheet music"
-maintainer="Brian Olsen <bnolsen@comcast.net>"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
 license="GPL-2.0-or-later"
 homepage="https://musescore.org/"
 distfiles="https://github.com/musescore/MuseScore/archive/v${version}.tar.gz"
-checksum=75b8e783edca9d23718770b3f715d95b88f64545e0372f4ccba58ab073cc7068
+checksum=c37acc6d7a316f04925265d2d22a35d715888580e16eff846e9b621954133c45
 nocross="genManual: cannot execute binary file: Exec format error"
 
 build_options="webengine"
