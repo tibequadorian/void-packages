@@ -1,0 +1,20 @@
+# Template file for 'DISTRHO-Ports'
+pkgname=DISTRHO-Ports
+version=2021.01.15
+revision=1
+wrksrc="${pkgname}-${version//./-}"
+build_style=meson
+hostmakedepends="pkg-config"
+makedepends="alsa-lib-devel freetype-devel fftw-devel libX11-devel
+ libXext-devel libXrender-devel libXcursor-devel MesaLib-devel"
+short_desc="Linux audio plugins and LV2 ports"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-3.0-or-later"
+homepage="http://distrho.sourceforge.net/ports"
+distfiles="https://github.com/DISTRHO/DISTRHO-Ports/archive/${version//./-}.tar.gz"
+checksum=19b4c3f33e73d7dd6c8b16666f6506b3abc1884b06e604769a217bce2bb61ed9
+
+if [ "$XBPS_TARGET_LIBC" = musl ]; then
+	makedepends+=" libexecinfo"
+	LDFLAGS+=",-lexecinfo"
+fi
