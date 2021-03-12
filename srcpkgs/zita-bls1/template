@@ -1,0 +1,23 @@
+# Template file for 'zita-bls1'
+pkgname=zita-bls1
+version=0.3.3
+revision=1
+build_wrksrc=source
+build_style=gnu-makefile
+make_build_args="PREFIX=/usr"
+hostmakedepends="pkg-config"
+makedepends="clxclient-devel clthreads-devel jack-devel cairo-devel fftw-devel
+ libpng-devel libXft-devel libX11-devel zita-convolver-devel"
+short_desc="Digital implementation of the Blumlein Shuffler"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/zita-bls1-${version}.tar.bz2"
+checksum=89f7ca12da4aef55c8a7a9b81c7fe72bc7d35aee0b1a68c64bdbb224e296a8e5
+
+CXXFLAGS="-ffast-math -pthread"
+
+pre_build() {
+	# change pkgconf to pkg-config
+	vsed -e 's/pkgconf/pkg-config/' -i Makefile
+}
