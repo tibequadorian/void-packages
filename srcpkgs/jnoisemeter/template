@@ -1,0 +1,20 @@
+# Template file for 'jnoisemeter'
+pkgname=jnoisemeter
+version=0.2.2
+revision=1
+build_wrksrc=source
+build_style=gnu-makefile
+hostmakedepends="pkg-config"
+makedepends="clthreads-devel clxclient-devel jack-devel freetype-devel
+ libXft-devel libX11-devel"
+short_desc="Measure audio and in particular noise signals"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/jnoisemeter-${version}.tar.bz2"
+checksum=e749eedee54cab55432a6f7c38510306491f9605edc106a8eeeb4d2078bdf015
+
+pre_build() {
+	# change pkgconf to pkg-config
+	sed -i 's/pkgconf/pkg-config/' Makefile
+}
