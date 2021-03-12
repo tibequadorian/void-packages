@@ -1,0 +1,20 @@
+# Template file for 'AMB1-plugins'
+pkgname=AMB1-plugins
+version=0.3.0
+revision=1
+build_wrksrc=source
+build_style=gnu-makefile
+short_desc="Set of ambisonics plugins"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/ladspa/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/AMB1-plugins-${version}.tar.bz2"
+checksum=16efda2042218e9e9fa28e237ead2ffbd66b1d2e69c1098bb6291ba5efadd8c3
+tags="ladspa-plugin"
+
+CXXFLAGS="-fPIC -D_REENTRANT"
+
+do_install() {
+	vinstall hoa1tools.so 755 /usr/lib/ladspa/
+	vdoc ../README
+}
