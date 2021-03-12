@@ -1,0 +1,17 @@
+# Template file for 'xwax'
+pkgname=xwax
+version=1.7
+revision=1
+build_style=configure
+configure_args="--prefix /usr $(vopt_enable alsa) $(vopt_enable jack) $(vopt_enable oss)"
+makedepends="SDL-devel SDL_ttf-devel $(vopt_if alsa alsa-lib-devel) $(vopt_if jack jack-devel)"
+depends="cdparanoia mpg123 ffmpeg"
+short_desc="Digital Vinyl System (DVS)"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-only"
+homepage="https://xwax.org/"
+distfiles="https://xwax.org/releases/xwax-${version}.tar.gz"
+checksum=85a06321a07a3c1f540f82a28505c1541e488bb0ecc436ad7de3d3c635defa08
+
+build_options="alsa jack oss"
+build_options_default="alsa jack"
