@@ -1,0 +1,22 @@
+# Template file for 'VCO-plugins'
+pkgname=VCO-plugins
+version=0.3.0
+revision=1
+build_style=gnu-makefile
+short_desc="Anti-aliased oscillator plugins"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/ladspa/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/VCO-plugins-${version}.tar.bz2"
+checksum=f4e93c22535fa9309577a322b1a7dbbd257ac6592bf90238ff271fb0c66bf8f7
+tags="ladspa-plugin"
+
+pre_build() {
+	# fix cross builds
+	vsed -e 's/g++/$(CXX)/' -i Makefile
+}
+
+do_install() {
+	vinstall blvco.so 755 /usr/lib/ladspa/
+	vdoc README
+}
