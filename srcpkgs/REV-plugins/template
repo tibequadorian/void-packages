@@ -1,0 +1,22 @@
+# Template file for 'REV-plugins'
+pkgname=REV-plugins
+version=0.7.1
+revision=1
+build_style=gnu-makefile
+short_desc="Stereo reverb plugin"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/ladspa/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/REV-plugins-${version}.tar.bz2"
+checksum=e70d990453ff6cd28b530ac6f6647e2ad6e135fcd3ae544474f30250bb8d77c6
+tags="ladspa-plugin"
+
+pre_build() {
+	# fix cross builds
+	vsed -e 's/g++/$(CXX)/' -i Makefile
+}
+
+do_install() {
+	vinstall zita-reverbs.so 755 /usr/lib/ladspa/
+	vdoc README
+}
