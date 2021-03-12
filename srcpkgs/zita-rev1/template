@@ -1,0 +1,23 @@
+# Template file for 'zita-rev1'
+pkgname=zita-rev1
+version=0.2.2
+revision=1
+build_wrksrc=source
+build_style=gnu-makefile
+make_build_args="PREFIX=/usr"
+hostmakedepends="pkg-config"
+makedepends="clthreads-devel clxclient-devel xorgproto libX11-devel
+ libXft-devel freetype-devel cairo-devel jack-devel"
+short_desc="Reverb effect plugin for JACK"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/zita-rev1-${version}.tar.bz2"
+checksum=2776309fab02f0f0c6a3944745ab4a3c8a97044af60ce1d4cdcba38a1d088c4d
+
+CXXFLAGS="-ffast-math -pthread"
+
+pre_build() {
+	# change pkgconf to pkg-config
+	vsed -e 's/pkgconf/pkg-config/' -i Makefile
+}
