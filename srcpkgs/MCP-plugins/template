@@ -1,0 +1,27 @@
+# Template file for 'MCP-plugins'
+pkgname=MCP-plugins
+version=0.4.0
+revision=1
+build_style=gnu-makefile
+short_desc="Voltage controlled lowpass filter"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/ladspa/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/MCP-plugins-${version}.tar.bz2"
+checksum=6c5bba81251ea03538ac3978279fea4065342b4267b0cd023dafca8268c84919
+tags="ladspa-plugin"
+
+CXXFLAGS="-fPIC -D_REENTRANT"
+
+pre_build() {
+	# fix cross builds
+	vsed -e 's/g++/$(CXX)/' -i Makefile
+}
+
+do_install() {
+	vinstall cs_chorus.so 755 /usr/lib/ladspa
+	vinstall cs_phaser.so 755 /usr/lib/ladspa
+	vinstall mvchpf24.so 755 /usr/lib/ladspa
+	vinstall mvclpf24.so 755 /usr/lib/ladspa
+	vdoc README
+}
