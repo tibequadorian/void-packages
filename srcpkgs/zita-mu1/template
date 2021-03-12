@@ -1,0 +1,23 @@
+# Template file for 'zita-mu1'
+pkgname=zita-mu1
+version=0.3.3
+revision=1
+build_wrksrc=source
+build_style=gnu-makefile
+make_build_args="PREFIX=/usr"
+hostmakedepends="pkg-config"
+makedepends="clthreads-devel clxclient-devel jack-devel libX11-devel
+ libXft-devel freetype-devel cairo-devel libpng-devel"
+short_desc="Stereo monitoring application for JACK"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-3.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/zita-mu1-${version}.tar.bz2"
+checksum=db6dca556536ed0c0512dd1b52fefe46c03a5ba2f329c52cd5cbb95e3b040691
+
+CXXFLAGS="-ffast-math -pthread"
+
+pre_build() {
+	# change pkgconf to pkg-config
+	vsed -e 's/pkgconf/pkg-config/' -i Makefile
+}
