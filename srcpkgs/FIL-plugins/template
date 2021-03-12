@@ -1,0 +1,22 @@
+# Template file for 'FIL-plugins'
+pkgname=FIL-plugins
+version=0.3.0
+revision=1
+build_style=gnu-makefile
+short_desc="Four-band parametric equaliser"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/ladspa/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/FIL-plugins-${version}.tar.bz2"
+checksum=1c0bf271211965f670a15a7783b4167307db77264ac1624a06e5667964da8ee9
+tags="ladspa-plugin"
+
+pre_build() {
+	# fix cross builds
+	vsed -e 's/g++/$(CXX)/' -i Makefile
+}
+
+do_install() {
+	vinstall filters.so 755 /usr/lib/ladspa/
+	vdoc README
+}
