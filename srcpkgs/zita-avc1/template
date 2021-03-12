@@ -1,0 +1,18 @@
+# Template file for 'zita-avc1'
+pkgname=zita-avc1
+version=0.1.0
+revision=1
+build_wrksrc=source
+build_style=gnu-makefile
+make_build_args="PREFIX=/usr"
+hostmakedepends="pkg-config"
+makedepends="clxclient-devel clthreads-devel cairo-devel jack-devel
+ libpng-devel libXft-devel libX11-devel"
+short_desc="Analog style vocoder using Jack"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-3.0-or-later"
+homepage="https://kokkinizita.linuxaudio.org/linuxaudio/"
+distfiles="https://kokkinizita.linuxaudio.org/linuxaudio/downloads/zita-avc1-${version}.tar.bz2"
+checksum=055b3b1cab772fe3d62cbaf3d076ba517778f78a853e6658af8aef6acb31f493
+
+CXXFLAGS="-ffast-math -pthread"
