@@ -1,0 +1,26 @@
+# Template file for 'wolf-shaper'
+pkgname=wolf-shaper
+version=0.1.8
+revision=1
+archs="i686* x86_64*"
+wrksrc=${pkgname}
+build_style=gnu-makefile
+make_build_target=all
+make_use_env=yes
+hostmakedepends="pkg-config"
+makedepends="libX11-devel libglvnd-devel $(vopt_if jack jack-devel)
+ $(vopt_if dssi 'dssi-devel liblo-devel')"
+short_desc="Waveshaper plugin with a spline-based graph editor"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-3.0-or-later"
+homepage="https://wolf-plugins.github.io/wolf-shaper/"
+distfiles="https://github.com/wolf-plugins/${pkgname}/releases/download/v${version}/${pkgname}-v${version}-source.tar.gz"
+checksum=708d2271c0e9af469f533da40d7385b8f8250c70d85c163d1633ff0c8b27e515
+
+build_options="vst2 lv2 dssi jack"
+build_options_default="vst2 lv2 dssi jack"
+
+export BUILD_VST2=$(vopt_if vst2 true false)
+export BUILD_LV2=$(vopt_if lv2 true false)
+export BUILD_DSSI=$(vopt_if dssi true false)
+export BUILD_JACK=$(vopt_if jack true false)
