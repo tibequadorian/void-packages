@@ -1,0 +1,23 @@
+# Template file for 'wolf-spectrum'
+pkgname=wolf-spectrum
+version=1.0.0
+revision=1
+archs="i686* x86_64*"
+wrksrc=${pkgname}
+build_style=gnu-makefile
+make_use_env=yes
+hostmakedepends="pkg-config"
+makedepends="libglvnd-devel $(vopt_if jack jack-devel)"
+short_desc="Real-time 2D spectrogram plugin"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/wolf-plugins/wolf-spectrum"
+distfiles="https://github.com/wolf-plugins/${pkgname}/releases/download/v${version}/${pkgname}-v${version}-source.tar.gz"
+checksum=de7237d57b7c17d17643a6382c657c92529655dda12560355eb9174ccb4f9575
+
+build_options="vst2 lv2 jack"
+build_options_default="vst2 lv2 jack"
+
+export BUILD_VST2=$(vopt_if vst2 true false)
+export BUILD_LV2=$(vopt_if lv2 true false)
+export BUILD_JACK=$(vopt_if jack true false)
