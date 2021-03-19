@@ -1,0 +1,23 @@
+# Template file for 'colorpicker'
+pkgname=colorpicker
+version=2018.01.15
+revision=1
+_commit=287676947e6e3b5b0cee784aeb1638cf22f0ce17
+build_style=gnu-makefile
+hostmakedepends="git pkg-config"
+makedepends="libX11-devel gtk+-devel"
+short_desc="GTK-based color picker"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="MIT"
+homepage="https://github.com/Ancurio/colorpicker"
+
+do_fetch() {
+	git clone git://github.com/Ancurio/colorpicker ${wrksrc}
+	cd ${wrksrc}
+	git checkout ${_commit}
+}
+
+do_install() {
+	vbin colorpicker
+	vlicense "${FILESDIR}/LICENSE"
+}
