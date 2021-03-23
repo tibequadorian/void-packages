@@ -14,6 +14,7 @@ license="GPL-2.0-or-later"
 homepage="https://rybczak.net/ncmpcpp"
 distfiles="${homepage}/stable/ncmpcpp-${version}.tar.bz2"
 checksum=faabf6157c8cb1b24a059af276e162fa9f9a3b9cd3810c43b9128860c9383a1b
+patch_args="-Np1"
 
 # Required by waddwstr() with ncurses on musl
 CXXFLAGS="-D_XOPEN_SOURCE=600"

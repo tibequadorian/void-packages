@@ -1,0 +1,101 @@
+From 4ab3f7b1cc9b7b11eab1beb4838d73842d60aaa6 Mon Sep 17 00:00:00 2001
+From: tibequadorian <tibequadorian@posteo.de>
+Date: Tue, 23 Mar 2021 02:14:05 +0100
+Subject: [PATCH 1/2] fix multiple values for vorbis comment
+
+---
+ src/tags.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/tags.cpp b/src/tags.cpp
+index a8b34ab7..b0eb6740 100644
+--- a/src/tags.cpp
++++ b/src/tags.cpp
+@@ -174,7 +174,7 @@ void writeXiphComments(const MPD::MutableSong &s, TagLib::Ogg::XiphComment *tag)
+ {
+ 	auto writeXiph = [&](const TagLib::String &type, const TagLib::StringList &list) {
+ 		for (auto it = list.begin(); it != list.end(); ++it)
+-			tag->addField(type, *it);
++			tag->addField(type, *it, it == list.begin());
+ 	};
+ 	// remove field previously used as album artist
+ 	tag->removeFields("ALBUM ARTIST");
+
+From 9e4cf87dd7c99ecdc4b940b3db62287835cbd6fb Mon Sep 17 00:00:00 2001
+From: tibequadorian <tibequadorian@posteo.de>
+Date: Tue, 23 Mar 2021 02:15:21 +0100
+Subject: [PATCH 2/2] add vorbis comment support for opus
+
+---
+ src/tags.cpp | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
+
+diff --git a/src/tags.cpp b/src/tags.cpp
+index b0eb6740..db0e113c 100644
+--- a/src/tags.cpp
++++ b/src/tags.cpp
+@@ -29,6 +29,7 @@
+ #include <flacfile.h>
+ #include <mpegfile.h>
+ #include <vorbisfile.h>
++#include <opusfile.h>
+ #include <tag.h>
+ #include <textidentificationframe.h>
+ #include <commentsframe.h>
+@@ -229,15 +230,21 @@ bool extendedSetSupported(const TagLib::File *f)
+ {
+ 	return dynamic_cast<const TagLib::MPEG::File *>(f)
+ 	||     dynamic_cast<const TagLib::Ogg::Vorbis::File *>(f)
++	||     dynamic_cast<const TagLib::Ogg::Opus::File *>(f)
+ 	||     dynamic_cast<const TagLib::FLAC::File *>(f);
+ }
+ 
+ ReplayGainInfo readReplayGain(TagLib::File *f)
+ {
+ 	ReplayGainInfo result;
+-	if (auto ogg_file = dynamic_cast<TagLib::Ogg::Vorbis::File *>(f))
++	if (auto vorbis_file = dynamic_cast<TagLib::Ogg::Vorbis::File *>(f))
+ 	{
+-		if (auto xiph = ogg_file->tag())
++		if (auto xiph = vorbis_file->tag())
++			result = getReplayGain(xiph);
++	}
++	else if (auto opus_file = dynamic_cast<TagLib::Ogg::Opus::File *>(f))
++	{
++		if (auto xiph = opus_file->tag())
+ 			result = getReplayGain(xiph);
+ 	}
+ 	else if (auto flac_file = dynamic_cast<TagLib::FLAC::File *>(f))
+@@ -264,9 +271,14 @@ void read(mpd_song *s)
+ 		else if (auto id3v1 = mpeg_file->ID3v1Tag())
+ 			readID3v1Tags(s, id3v1);
+ 	}
+-	else if (auto ogg_file = dynamic_cast<TagLib::Ogg::Vorbis::File *>(f.file()))
++	else if (auto vorbis_file = dynamic_cast<TagLib::Ogg::Vorbis::File *>(f.file()))
++	{
++		if (auto xiph = vorbis_file->tag())
++			readXiphComments(s, xiph);
++	}
++	else if (auto opus_file = dynamic_cast<TagLib::Ogg::Opus::File *>(f.file()))
+ 	{
+-		if (auto xiph = ogg_file->tag())
++		if (auto xiph = opus_file->tag())
+ 			readXiphComments(s, xiph);
+ 	}
+ 	else if (auto flac_file = dynamic_cast<TagLib::FLAC::File *>(f.file()))
+@@ -299,9 +311,13 @@ bool write(MPD::MutableSong &s)
+ 		// do not call generic save() as it will duplicate tags
+ 		saved = true;
+ 	}
+-	else if (auto ogg_file = dynamic_cast<TagLib::Ogg::Vorbis::File *>(f.file()))
++	else if (auto vorbis_file = dynamic_cast<TagLib::Ogg::Vorbis::File *>(f.file()))
++	{
++		writeXiphComments(s, vorbis_file->tag());
++	}
++	else if (auto opus_file = dynamic_cast<TagLib::Ogg::Opus::File *>(f.file()))
+ 	{
+-		writeXiphComments(s, ogg_file->tag());
++		writeXiphComments(s, opus_file->tag());
+ 	}
+ 	else if (auto flac_file = dynamic_cast<TagLib::FLAC::File *>(f.file()))
+ 	{
