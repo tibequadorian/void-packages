@@ -1,0 +1,20 @@
+# Template file for 'tiemu'
+pkgname=tiemu
+version=3.04
+revision=1
+_commit=f327e1c72725bcc9641e6fad8c3afaa37a3ebd1c
+wrksrc=tiemu-${_commit}/tiemu/trunk
+build_style=gnu-configure
+configure_args+="--disable-gdb"
+hostmakedepends="pkg-config gettext"
+makedepends="libticables2-devel libticalcs2-devel gtk+-devel libglade-devel SDL-devel xorg-server-devel"
+short_desc="Full-featured TI-89/Titanium/92/92+/V200 multi-platform emulator"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-or-later"
+homepage="http://lpg.ticalc.org/prj_tiemu/"
+distfiles="https://github.com/debrouxl/tiemu/archive/${_commit}.tar.gz"
+checksum=54da35762dd1e28d7225e8997dee88f362617cc088a63e37c05a5a2e4bb97401
+
+do_check() {
+	:
+}
