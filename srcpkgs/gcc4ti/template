@@ -1,0 +1,36 @@
+# Template file for 'gcc4ti'
+pkgname=gcc4ti
+version=0.96b11
+revision=1
+_commit=30c611b1287b4d6b0296102dcab9ef593778a6c2
+wrksrc=gcc4ti-${_commit}
+hostmakedepends="tar patch"
+short_desc="Complete and mature GPL SDK for the TI-68k calculators"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-2.0-only"
+homepage="https://github.com/debrouxl/gcc4ti"
+distfiles="https://github.com/debrouxl/gcc4ti/archive/${_commit}.tar.gz"
+checksum=b444c9e8f844ccdb7d0b76fdc3b40069aab987ab998269f6c290a0c1f2436aa6
+nostrip_files="tigcc.a flashos.a fargo.a"
+nocross=yes
+
+do_install() {
+	cd trunk/tigcc-linux/scripts
+	./updatesrc
+	export PREFIX_GCC4TI=$DESTDIR/opt/gcc4ti
+	export PATH=$PATH:$PREFIX_GCC4TI/bin
+	export CFLAGS="-Os -s -fno-exceptions -fomit-frame-pointer"
+	export GCC4TIHOST=$XBPS_CROSS_TRIPLET
+	cd ../gcc4ti-0.96b11/scripts
+	./Install_step_1
+
+	# override config.guess/sub from 2004 to detect modern targets
+	local cfgdir="${XBPS_COMMONDIR}/environment/configure/automake"
+	cp ${cfgdir}/config.* ../download/gcc-*
+	cp ${cfgdir}/config.* ../download/binutils-*
+
+	./Install_step_2
+	./Install_step_3
+	./Install_step_4
+	./Install_step_5
+}
