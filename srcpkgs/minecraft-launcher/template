@@ -1,0 +1,16 @@
+# Template file for 'minecraft-launcher'
+pkgname=minecraft-launcher
+version=2.2.3123
+revision=1
+wrksrc="$pkgname"
+short_desc="Official Minecraft Launcher"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="custom:EULA"
+homepage="https://www.minecraft.net/"
+distfiles="https://launcher.mojang.com/download/Minecraft.tar.gz"
+checksum=2d7b7ea3835536b6900d0201957c6d96d646354fd071badab2ff750344eba5c6
+nopie=yes
+
+do_install() {
+	vbin minecraft-launcher
+}
