@@ -1,0 +1,15 @@
+# Template file for 'airshipper-bin'
+pkgname=airshipper-bin
+version=0.4.2
+revision=1
+create_wrksrc=yes
+short_desc="Official Veloren launcher binary"
+maintainer="tibequadorian <tibequadorian@posteo.de>"
+license="GPL-3.0-or-later"
+homepage="https://github.com/songtronix/airshipper/"
+distfiles="https://github.com/Songtronix/Airshipper/releases/download/v${version}/airshipper-linux.tar.gz"
+checksum=92553d99f000b93f32338807db3b153f52132e3e6190ba39ae492527fdbff47f
+
+do_install() {
+	vbin airshipper
+}
